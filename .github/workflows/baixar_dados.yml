@@ -1,0 +1,39 @@
+name: Baixar dados do workshop
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/baixar_dados.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  baixar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Baixar os 6 datasets das fontes originais
+        run: |
+          mkdir -p dados
+          curl -fsSL --retry 3 -o dados/adult.csv    "https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data"
+          curl -fsSL --retry 3 -o dados/german.csv   "https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/german.data"
+          curl -fsSL --retry 3 -o dados/compas.csv   "https://raw.githubusercontent.com/propublica/compas-analysis/master/compas-scores-two-years.csv"
+          curl -fsSL --retry 3 -o dados/diabetes.csv "https://raw.githubusercontent.com/fairlearn/talks/main/2021_scipy_tutorial/data/diabetic_preprocessed.csv"
+          curl -fsSL --retry 3 -o dados/law.csv      "https://raw.githubusercontent.com/tailequy/fairness_dataset/main/experiments/data/law_school_clean.csv"
+          curl -fsSL --retry 3 -o dados/student.csv  "https://raw.githubusercontent.com/arunk13/MSDA-Assignments/master/IS607Fall2015/Assignment3/student-por.csv"
+          echo "Tamanhos baixados:"
+          ls -la dados/
+          # valida que nenhum arquivo veio vazio
+          for f in dados/*.csv; do [ -s "$f" ] || { echo "ERRO: $f vazio"; exit 1; }; done
+
+      - name: Commit dos dados
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dados
+          git diff --cached --quiet && echo "Nada a atualizar" || git commit -m "Atualiza datasets do workshop (download automático das fontes originais)"
+          git push
