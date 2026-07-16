@@ -1,0 +1,95 @@
+dataset,titulo,preve,positivo,positivo_e_beneficio,fp,fn,contexto,tipo_de_vies,dilema
+adult,💰 Renda — Censo dos EUA (Adult),se a renda anual da pessoa passa de US$ 50 mil,renda alta (>50K) — usado p.ex. para aprovar limite de crédito ou oferta de emprego,True,pessoa recebe oferta/limite que talvez não sustente,pessoa qualificada é ignorada pelo sistema,Dados reais do censo americano de 1994. Cada linha é uma pessoa adulta. Bancos e RHs usam modelos assim para estimar poder aquisitivo.,"Viés HISTÓRICO nos rótulos: o mundo que gerou os dados era desigual, e o modelo aprende essa desigualdade como se fosse 'verdade'.","O DILEMA DESTE CASO — descrever o mundo ou corrigi-lo?
+Nos dados, bem menos mulheres têm renda >50K (reflexo de desigualdade histórica).
+Um modelo 'preciso' reproduz essa desigualdade nas previsões.
+
+Opções em conflito:
+  A) Manter o modelo fiel aos dados: melhor acurácia, mas perpetua o padrão histórico
+     (mulheres seguem recebendo menos ofertas).
+  B) Forçar taxas de seleção iguais (paridade demográfica): o modelo passa a 'errar de propósito'
+     segundo os dados — e a igualdade de oportunidade (TPR) e a precisão entre grupos se desequilibram.
+  C) Igualar o TPR (igualdade de oportunidade): quem É de alta renda tem a mesma chance de ser
+     reconhecido nos dois grupos — mas as taxas de seleção continuam diferentes.
+
+Perguntas para o grupo: o modelo deve retratar o mundo COMO É ou COMO DEVERIA SER?
+Quem tem legitimidade para decidir isso — o programador, a empresa, a lei?"
+compas,⚖️ Justiça criminal — Reincidência (COMPAS/ProPublica),se a pessoa será presa de novo nos próximos 2 anos,rotulada como 'alto risco de reincidência' — ATENÇÃO: aqui a previsão positiva PREJUDICA a pessoa (pode negar fiança/liberdade),False,pessoa que NÃO reincidiria fica marcada como perigosa (pode ficar presa injustamente),pessoa que vai reincidir é liberada,"Dados reais do sistema COMPAS (Flórida, EUA). Cada linha é um réu avaliado. Juízes usavam o escore para decidir fiança e pena.",Viés de MEDIÇÃO no rótulo: usamos 'foi preso de novo' como aproximação de 'cometeu crime de novo' — mas policiamento não é igual em todos os bairros e grupos.,"O DILEMA DESTE CASO — o teorema da impossibilidade na vida real
+Em 2016, a ProPublica mostrou que réus negros recebiam quase 2x mais falsos positivos que réus brancos.
+Grupos têm taxas-base de reincidência REGISTRADA diferentes (em parte por policiamento desigual).
+A matemática (Kleinberg et al. 2016; Chouldechova 2016) prova que, nessa situação,
+é IMPOSSÍVEL ter ao mesmo tempo:
+  (1) escore calibrado (mesmo significado de 'alto risco' para os dois grupos) e
+  (2) taxas iguais de falsos positivos e falsos negativos entre grupos.
+
+Opções em conflito:
+  A) Manter calibração (defesa da empresa Northpointe): 'alto risco' significa o mesmo para todos —
+     mas o grupo negro acumula mais falsos positivos (mais inocentes presos).
+  B) Igualar falsos positivos (crítica da ProPublica): protege inocentes igualmente —
+     mas o escore passa a significar coisas diferentes por grupo, e juízes deixam de poder confiar nele.
+  C) Não usar o modelo: voltar à decisão 100% humana — que historicamente também é enviesada.
+
+Perguntas para o grupo: qual erro é moralmente pior aqui, FP ou FN? Um modelo desses deveria existir? Sob que salvaguardas?"
+german,🏦 Crédito bancário — German Credit,se o cliente é um bom pagador (crédito aprovado),crédito APROVADO — benefício direto para a pessoa,True,banco aprova quem vai dar calote (prejuízo financeiro ao banco),banco nega crédito a um bom pagador (injustiça com a pessoa),1.000 pedidos reais de crédito de um banco alemão (anos 1990). Cada linha é um cliente. Este dataset vem com uma matriz de custo oficial: aprovar um mau pagador custa 5x mais ao banco do que negar um bom pagador.,Viés de REPRESENTAÇÃO + custos assimétricos: o grupo jovem é pequeno (métricas instáveis!) e os dois tipos de erro têm preços muito diferentes.,"O DILEMA DESTE CASO — justiça tem preço (e alguém paga a conta)
+Jovens (<25) são só ~15% da base: suas métricas oscilam muito (confie nelas?)
+e o banco lucra menos se errar 'para cima' com eles.
+
+Opções em conflito:
+  A) Otimizar o lucro do banco (custo 5:1): o limiar fica alto para o grupo de maior risco —
+     jovens bons pagadores pagam a conta, e a 'regra dos 80%' provavelmente é violada.
+  B) Igualar a taxa de aprovação entre faixas etárias: mais calotes entram na conta —
+     o banco repassa o custo em juros mais altos PARA TODOS os clientes.
+  C) Coletar mais dados de jovens antes de decidir: estatisticamente correto,
+     mas até lá o sistema atual continua operando (não decidir também é decidir).
+
+Perguntas para o grupo: com um grupo tão pequeno, dá para AFIRMAR que há discriminação?
+É aceitável que a busca por lucro produza exclusão sistemática? Quem deve pagar o custo da equidade?"
+diabetes,🏥 Saúde — Readmissão hospitalar (Diabetes 130 hospitais),se o paciente voltará ao hospital em menos de 30 dias após a alta,paciente entra num PROGRAMA DE CUIDADO EXTRA pós-alta (vagas limitadas!) — a previsão positiva AJUDA a pessoa,True,vaga escassa do programa vai para quem não precisava,paciente que ia voltar ao hospital fica SEM o cuidado extra,Dados reais de ~100 mil internações por diabetes em 130 hospitais dos EUA (1999-2008). Cada linha é uma internação. Hospitais usam modelos assim para alocar programas de cuidado pós-alta.,Viés de ACESSO nos rótulos: readmissão só é registrada para quem CONSEGUE voltar ao hospital — grupos com menos acesso à saúde parecem 'precisar menos' do que realmente precisam.,"O DILEMA DESTE CASO — eficiência ou equidade na saúde?
+Caso análogo real: Obermeyer et al. (Science, 2019) mostraram um algoritmo hospitalar
+que subestimava a necessidade de pacientes negros por usar custo como proxy de saúde.
+Aqui ser selecionado é BOM (cuidado extra). As vagas são limitadas:
+cada vaga dada a um grupo é uma vaga a menos para o outro.
+
+Opções em conflito:
+  A) Maximizar readmissões evitadas no total (utilitarismo): aloca vagas para onde o modelo
+     acerta mais — como os rótulos subestimam a necessidade de quem tem menos acesso,
+     esse grupo recebe menos cuidado justamente por já ser mal atendido.
+  B) Igualar a taxa de seleção entre grupos (equidade): parte das vagas migra de pacientes
+     com maior risco previsto para equilibrar os grupos — o total de readmissões evitadas cai.
+  C) Igualar o TPR (não deixar doentes para trás em nenhum grupo): meio-termo,
+     mas exige admitir que o rótulo 'voltou em 30 dias' já é enviesado.
+
+Perguntas para o grupo: numa fila de hospital, vale a pena 'perder eficiência' por equidade?
+E se o viés está no rótulo, alguma métrica calculada sobre ele é confiável?"
+law,🎓 Direito — Aprovação no exame da ordem (Law School/LSAC),se o estudante de Direito passará no exame da ordem (bar exam),previsão de aprovação — usada por faculdades para decidir ADMISSÃO e bolsas,True,admite/investe em quem não vai passar,nega vaga/bolsa a quem PASSARIA no exame,"Estudo real do LSAC com ~20 mil estudantes de Direito dos EUA. Cada linha é um estudante. Faculdades usam notas (LSAT, GPA) para prever sucesso e decidir admissões.","Viés por PROXY: mesmo removendo o atributo sensível do modelo, as notas de entrada carregam a informação do grupo (codificação redundante) — 'fairness through unawareness' NÃO funciona.","O DILEMA DESTE CASO — remover a variável sensível resolve? (spoiler: não)
+O grupo 'Non-White' é pequeno nos dados e tem notas médias menores no LSAT — um teste
+historicamente criticado como culturalmente enviesado.
+Teste neste notebook: compare o modelo COM e SEM o atributo sensível (Decisão 4)
+e as métricas por grupo. A disparidade quase não muda — LSAT e GPA funcionam como proxies.
+
+Opções em conflito:
+  A) 'Cegar' o modelo (remover raça): parece neutro, mas a disparidade continua
+     e você perde até a capacidade de MEDI-la direito.
+  B) Usar a variável racial explicitamente para corrigir (ex.: limiares por grupo):
+     reduz a disparidade — mas significa tratar pessoas diferente conforme a raça,
+     o que é eticamente controverso e ilegal em algumas jurisdições (EUA baniram ação afirmativa em admissões em 2023).
+  C) Atacar a causa: reduzir o peso do LSAT no modelo — a acurácia cai; a faculdade aceita?
+
+Perguntas para o grupo: é mais justo IGNORAR a raça ou USÁ-LA para corrigir?
+As duas coisas podem ser 'discriminação'? Como a lei do seu país trata isso?"
+student,🏫 Educação — Risco de reprovação (escolas portuguesas),se o aluno está em RISCO DE REPROVAR na disciplina (nota final < 10),"aluno sinalizado como 'em risco' → recebe reforço/tutoria — ajuda, mas também RÓTULA o aluno",True,"aluno que passaria é rotulado 'em risco' (estigma, ansiedade, expectativa reduzida dos professores)",aluno que vai reprovar não recebe ajuda nenhuma,"Dados reais de 649 alunos de Português em duas escolas de Portugal (Cortez & Silva, 2008). Cada linha é um aluno, com dados socioeconômicos e de hábitos. Escolas usam sistemas de 'alerta precoce' assim para direcionar reforço escolar.","Viés de INTERVENÇÃO: a previsão positiva ajuda E estigmatiza ao mesmo tempo — e o grupo rural, menor e mais vulnerável, é o mais sensível aos dois tipos de erro.","O DILEMA DESTE CASO — ajudar sem rotular?
+Alunos de zona rural são minoria nos dados e enfrentam mais barreiras (transporte, renda,
+escolaridade dos pais).
+Um falso positivo aqui não é só um número: é um aluno que passaria a ser tratado como
+'aluno-problema' (efeito Pigmalião: expectativas moldam desempenho).
+Um falso negativo é um aluno que reprova sem ninguém ter tentado ajudar.
+
+Opções em conflito:
+  A) Limiar BAIXO (sinaliza muita gente): quase nenhum aluno fica sem ajuda,
+     mas muitos são rotulados sem precisar e o reforço fica lotado (perde qualidade).
+  B) Limiar ALTO (sinaliza pouca gente): ajuda focada e sem estigma desnecessário,
+     mas alunos no limite passam despercebidos — e o grupo rural, com menos dados, é o que mais some.
+  C) Limiares DIFERENTES por zona (mais sensível para o grupo rural): reduz falsos negativos
+     onde mais dói — mas é aceitável a escola tratar alunos diferente conforme o endereço?
+
+Perguntas para o grupo: o que custa mais, o estigma (FP) ou o abandono (FN)?
+Vocês contariam ao aluno que ele foi sinalizado por um algoritmo?"
