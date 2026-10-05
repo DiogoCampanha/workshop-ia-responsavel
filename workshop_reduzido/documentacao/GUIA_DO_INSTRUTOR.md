@@ -6,7 +6,7 @@
 
 - 1 encontro de **2h** · **5 grupos** · 1 estudo de caso por grupo, sem repetição
 - Os alunos usam **só o notebook** `workshop_reduzido/workshop_ia_responsavel_reduzido.ipynb` (download ou Colab)
-- Slides do instrutor: `documentacao/slides/workshop_ia_responsavel_2h.pptx` (22 slides, com notas do apresentador e minutagem)
+- Slides do instrutor: `documentacao/slides/workshop_ia_responsavel_2h.pptx` (23 slides, com notas do apresentador e minutagem)
 
 **Links para enviar aos alunos:**
 - Colab: `https://colab.research.google.com/github/DiogoCampanha/workshop-ia-responsavel/blob/main/workshop_reduzido/workshop_ia_responsavel_reduzido.ipynb`
@@ -18,10 +18,10 @@
 |---|---|---|---|
 | 0–10' | Abertura: por que importa + mapa da IA Responsável | setup (2 primeiras células) | 1–4 |
 | 10–25' | **Parte 1** · Treinar, direto ao ponto | 1.1–1.2 + Tarefa 1 | 5–8 |
-| 25–40' | **Parte 2** · Hipótese → revelação → com/sem atributo | 2.1–2.3 | 9 |
-| 40–90' | **Parte 3** · Auditoria de fairness (o coração do encontro) | 3.1–3.5 + Tarefas 2–4 | 10–18 |
-| 90–100' | **Parte 4** · O dilema do caso | Decisão 4 | 19 |
-| 100–120' | **Parte 5** · Painel final + apresentações relâmpago (2,5' por grupo) + síntese | painel final | 20–22 |
+| 25–40' | **Parte 2** · Hipótese → revelação → com/sem atributo | 2.1–2.3 | 9–10 |
+| 40–90' | **Parte 3** · Auditoria de fairness (o coração do encontro) | 3.1–3.5 + Tarefas 2–4 | 11–19 |
+| 90–100' | **Parte 4** · O dilema do caso | Decisão 4 | 20 |
+| 100–120' | **Parte 5** · Painel final + apresentações relâmpago (2,5' por grupo) + síntese | painel final | 21–23 |
 
 **Se o tempo apertar,** corte da Parte 1, nunca da Parte 3. Nesta ordem:
 1. Pule a Tarefa 1 e leia o resultado do treino em voz alta.
@@ -45,11 +45,11 @@ Os alunos **não recebem** o atributo sensível nem pistas de viés no início:
 
 1. **Parte 1** — treinam e avaliam. A ficha do caso mostra só o contexto neutro.
 2. **2.1 — hipótese** — o grupo registra em `HIPOTESES_DO_GRUPO` quem pode ser prejudicado e quais colunas são suspeitas. *A célula bloqueia (`assert`) se não preencherem.*
-3. **2.2 — revelação** — **o instrutor informa a cada grupo, individualmente** (papel ou de viva voz — nunca projetar), o atributo sensível do caso. O grupo preenche `SENSIVEL = "..."` à mão.
+3. **2.2 — revelação** — quando **todos** os grupos tiverem registrado a hipótese, o instrutor projeta o **slide 10** ("A revelação"), com o atributo sensível de cada caso. Cada grupo preenche `SENSIVEL = "..."` à mão e compara com a sua hipótese.
 4. **2.3 — Decisão 2** — o notebook treina o modelo COM e SEM o atributo e o grupo escolhe o oficial.
 5. **3.4 — "cegar" resolve?** — comparação automática COM × SEM, lado a lado, mais um **detector de proxies** (um modelo simples tenta adivinhar o grupo usando só as outras colunas).
 
-### 🤫 Atributos sensíveis para entregar aos grupos (seção 2.2)
+### 🤫 Atributos sensíveis (mostrados no slide 10, seção 2.2 do notebook)
 
 | Caso | Valor exato a preencher em `SENSIVEL` |
 |---|---|
